@@ -1,4 +1,4 @@
-package universityapi.excercise.university.model.dto;
+package universityapi.excercise.course.model.dto;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import universityapi.excercise.universitycourse.model.UniversityCourse;
 import universityapi.excercise.universitycourse.model.dto.UniversityCourseResponseDTO;
 
 @Getter
@@ -15,10 +14,8 @@ import universityapi.excercise.universitycourse.model.dto.UniversityCourseRespon
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UniversityResponseDTO {
+public class CourseResponseDTO {
   private Long id;
   private String name;
-  private String city;
   private List<UniversityCourseResponseDTO> universityCourseResponseDTOs;
-
 }

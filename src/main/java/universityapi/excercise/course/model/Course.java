@@ -1,4 +1,4 @@
-package universityapi.excercise.university.model;
+package universityapi.excercise.course.model;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import universityapi.excercise.university.model.dto.UniversityResponseDTO;
+import universityapi.excercise.course.model.dto.CourseResponseDTO;
 import universityapi.excercise.universitycourse.model.UniversityCourse;
 import universityapi.excercise.universitycourse.model.dto.UniversityCourseResponseDTO;
 
@@ -26,23 +26,22 @@ import universityapi.excercise.universitycourse.model.dto.UniversityCourseRespon
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class University {
+public class Course {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;
 
-  private String city;
-
-  @OneToMany(mappedBy = "university") // harus sama dgn nama variabel relasi di tabel course
+  @OneToMany(mappedBy = "course")
   @JsonIgnore
   private List<UniversityCourse> universityCourses;
 
-  public UniversityResponseDTO convertToResponse() {
+  public CourseResponseDTO convertToResponse() {
     List<UniversityCourseResponseDTO> universityCourseResponseDTOs = this.universityCourses.stream()
-        .map(UniversityCourse::convertToResponseUniversity).toList();
-    return UniversityResponseDTO.builder().id(this.id).name(this.name).city(this.city)
+        .map(UniversityCourse::convertToResponseCourse).toList();
+    return CourseResponseDTO.builder().id(this.id).name(this.name)
         .universityCourseResponseDTOs(universityCourseResponseDTOs).build();
   }
+
 }
