@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import io.micrometer.common.lang.Nullable;
+import jakarta.validation.constraints.NotBlank;
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -35,6 +36,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
   @Override
   @Nullable
+  @NotBlank
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
       HttpHeaders headers, HttpStatusCode status, WebRequest request) {
     Map<String, String> errors = new HashMap<>();

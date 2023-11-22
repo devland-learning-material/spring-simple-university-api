@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,7 +36,7 @@ public class University {
 
   private String city;
 
-  @OneToMany(mappedBy = "university") // harus sama dgn nama variabel relasi di tabel course
+  @OneToMany(mappedBy = "university", cascade = CascadeType.REMOVE)
   @JsonIgnore
   private List<UniversityCourse> universityCourses;
 
