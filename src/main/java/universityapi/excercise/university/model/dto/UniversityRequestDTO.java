@@ -20,10 +20,10 @@ public class UniversityRequestDTO {
   private String name;
   @NotBlank(message = "City is required")
   private String city;
-  private List<UniversityCourse> universityCourses;
+  // private List<UniversityCourse> universityCourses;
 
   public University convertToEntity() {
-    return University.builder().id(this.id).name(this.name).city(this.city).universityCourses(this.universityCourses)
+    return University.builder().id(this.id).name(this.name).city(this.city)
         .build();
   }
 }

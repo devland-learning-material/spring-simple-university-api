@@ -38,6 +38,9 @@ public class Course {
   private List<UniversityCourse> universityCourses;
 
   public CourseResponseDTO convertToResponse() {
+    if (this.universityCourses == null) {
+      return CourseResponseDTO.builder().id(this.id).name(this.name).build();
+    }
     List<UniversityCourseResponseDTO> universityCourseResponseDTOs = this.universityCourses.stream()
         .map(UniversityCourse::convertToResponseCourse).toList();
     return CourseResponseDTO.builder().id(this.id).name(this.name)
