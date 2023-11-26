@@ -16,6 +16,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import universityapi.excercise.student.model.Student;
+import universityapi.excercise.student.model.dto.StudentResponseDTO;
 import universityapi.excercise.university.model.dto.UniversityResponseDTO;
 import universityapi.excercise.universitycourse.model.UniversityCourse;
 import universityapi.excercise.universitycourse.model.dto.UniversityCourseResponseDTO;
@@ -40,13 +42,18 @@ public class University {
   @JsonIgnore
   private List<UniversityCourse> universityCourses;
 
+  @OneToMany(mappedBy = "university", cascade = CascadeType.REMOVE)
+  private List<Student> students;
+
   public UniversityResponseDTO convertToResponse() {
-    if (this.universityCourses == null) {
+    if (this.universityCourses == null || this.students == null) {
       return UniversityResponseDTO.builder().id(this.id).name(this.name).city(this.city).build();
     }
     List<UniversityCourseResponseDTO> universityCourseResponseDTOs = this.universityCourses.stream()
         .map(UniversityCourse::convertToResponseUniversity).toList();
+
+    List<StudentResponseDTO> studentResponseDTOs = this.students.stream().map(Student::convertToResponse).toList();
     return UniversityResponseDTO.builder().id(this.id).name(this.name).city(this.city)
-        .universityCourseResponseDTOs(universityCourseResponseDTOs).build();
+        .universityCourseResponseDTOs(universityCourseResponseDTOs).studentResponseDTOs(studentResponseDTOs).build();
   }
 }

@@ -1,9 +1,10 @@
 package universityapi.excercise.student;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,17 +29,20 @@ import universityapi.excercise.student.model.dto.StudentResponseDTO;
 @RequiredArgsConstructor
 public class StudentController {
   private final StudentService studentService;
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @GetMapping("/students")
-  public ResponseEntity<Page<Student>> getAll(
+  public ResponseEntity<Page<StudentResponseDTO>> getAll(
       @RequestParam(value = "page", required = false, defaultValue = "1") String pageString,
       @RequestParam(value = "size", required = false, defaultValue = "5") String sizeString) {
-    int page = Integer.valueOf(pageString) - 1;
-    int size = Integer.valueOf(sizeString);
+    this.logger.info("Get All " + ", page : " + pageString + ", size : " + sizeString);
+    int page = Integer.parseInt(pageString) - 1;
+    int size = Integer.parseInt(sizeString);
     Pageable pageable = PageRequest.of(page, size);
     Page<Student> students = this.studentService.getAll(pageable);
-    List<StudentResponseDTO> studentResponseDTOs = students.stream().map(Student::convertToResponse).toList();
-    return ResponseEntity.ok(students);
+    Page<StudentResponseDTO> studentResponseDTOPage = students.map(Student::convertToResponse);
+
+    return ResponseEntity.ok(studentResponseDTOPage);
   }
 
   @GetMapping("/students/{id}")
